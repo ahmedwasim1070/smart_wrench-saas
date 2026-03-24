@@ -8,7 +8,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable("users");
+        builder.ToTable("user");
 
         builder.HasKey(x => x.Id);
 
@@ -20,8 +20,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Email).IsRequired(true).HasMaxLength(255);
         builder.HasIndex(x => x.Email).IsUnique();
 
-        builder.Property(x => x.Password).IsRequired(false).HasMaxLength(255);
+        builder.Property(x => x.PasswordHash).IsRequired(false).HasMaxLength(255);
 
-        builder.Property(x => x.Provider).IsRequired(true).HasConversion<string>().HasMaxLength(20);
+        builder.Property(x => x.Provider).IsRequired(true).HasMaxLength(20).HasConversion<string>();
+
+        builder.Property(x => x.ProviderId).IsRequired(false).HasMaxLength(255);
+
+        builder.Property(x => x.UpdatedAt).IsRequired();
+        builder.Property(x => x.CreatedAt).IsRequired();
     }
 }

@@ -38,7 +38,7 @@ public class AuthControllers : ControllerBase
             {
                 FullName = request.FullName,
                 Email = request.Email,
-                Password = hashedPassword
+                PasswordHash = hashedPassword
             };
 
             _context.Users.Add(newUser);
@@ -61,7 +61,7 @@ public class AuthControllers : ControllerBase
             if (user == null)
                 return NotFound(ApiResponse<Object>.Fail("User not found."));
 
-            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
                 return Unauthorized(ApiResponse<Object>.Fail("Check your password and try again."));
 
             var token = _tokenService.CreateToken(user);
@@ -85,7 +85,6 @@ public class AuthControllers : ControllerBase
     [HttpGet("google")]
     public async Task<ActionResult<ApiResponse<Object>>> Zero()
     {
-
         try
         {
             return Ok(ApiResponse<Object>.Ok(null, "Successfully Logged In."));
