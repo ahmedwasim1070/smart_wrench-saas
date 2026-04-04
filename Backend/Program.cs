@@ -15,6 +15,20 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString)
            .UseSnakeCaseNamingConvention());
+
+// Authentication Configuration
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = "Cookies";
+    options.DefaultChallengeScheme = "Google";
+})
+.AddCookie("Cookies")
+.AddGoogle("Google", options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+});
+
 // Custom Confgis
 // For fetching errors and parsing them in a custom structured response
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -47,6 +61,9 @@ if (app.Environment.IsDevelopment())
 
 // request protocol upgrade if available
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Scan files & folder to find routes
 app.MapControllers();

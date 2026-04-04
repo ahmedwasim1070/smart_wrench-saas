@@ -37,6 +37,4 @@ public class AppDbContext : DbContext
         // Scan for IEntityTypeConfiguration configs
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
-
-
 }

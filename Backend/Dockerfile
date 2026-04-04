@@ -15,7 +15,7 @@ COPY . .
 RUN dotnet publish "Backend.csproj" -c Release -o /app/publish
 
 # 2 - Copying the compiled version to the main enviroment that will host our app
-# Acquire the version image version acquires the image that we were workign on 
+# Acquire the version image version acquires the image that we were working on 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 # make new dir /app in container
 WORKDIR /app

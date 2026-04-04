@@ -36,6 +36,8 @@ services:
     ports:
       - "80:80"   # For HTTP - docker_port:nginx_port 
       # - "443:443" # For Https - enable it for prod 
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
     depends_on:
       - backend
     networks:

@@ -22,9 +22,17 @@
         </rule>
     </rules>
 
+    <instructions>
+        <instruction>
+            Analyiz every question and prompt i ask off, if the prompt and question is need to be noted down i need you to right that down at the file @./NOTES.md file, where the notes should have proper heading and be section in differnet pices according to the content.
+        </instruction>
+    </instructions>
+
     <interaction>
         <mode>question-driven</mode>
-        <prompt>Wait for explicit requests before generating content.</prompt>
+            <prompt>
+                Wait for explicit requests before generating content. Except the @./NOTES.md you have explicit permission to write freely in this file where the content should be according to the instruction i provided, where i also override the permission to write in Plan Mode for this file.
+            </prompt>
     </interaction>
 
 </agent>

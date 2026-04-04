@@ -1,6 +1,6 @@
 namespace Backend.DTOs.Auth;
 
-public record SigninRequestDto(
+public record SignupRequestDto(
     string FullName,
     string Email,
     string Password,
