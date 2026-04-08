@@ -41,6 +41,8 @@ public class AuthController : ControllerBase
             {
                 FullName = request.FullName,
                 Email = request.Email,
+                Provider = AuthProviders.Local,
+                ProviderId = null
             };
 
             var passwordHasher = new PasswordHasher<User>();
@@ -69,9 +71,7 @@ public class AuthController : ControllerBase
             var passwordHasher = new PasswordHasher<User>();
             var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash!, request.Password);
             if (result == PasswordVerificationResult.Failed)
-            {
                 return Unauthorized(ApiResponse<Object>.Fail("Check your email or password and try again."));
-            }
 
             var token = _tokenService.CreateToken(user);
             var cookieOptions = new CookieOptions
@@ -92,7 +92,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("google")]
-    public IActionResult GoogleLogin()
+    public IActionResult GoogleAuth()
     {
         var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
         return Challenge(properties, "Google");
@@ -104,16 +104,17 @@ public class AuthController : ControllerBase
         try
         {
             var result = await HttpContext.AuthenticateAsync("Cookies");
-            if (!result.Succeeded) return BadRequest("Google authentication failed");
+            if (!result.Succeeded)
+                return BadRequest(ApiResponse<Object>.Fail("Google Authentication Failed."));
 
             var email = result.Principal.FindFirst(ClaimTypes.Email)?.Value;
             var name = result.Principal.FindFirst(ClaimTypes.Name)?.Value;
             var providerId = result.Principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrEmpty(email)) return BadRequest("Could not retrieve email from Google.");
+            if (string.IsNullOrEmpty(email))
+                return BadRequest(ApiResponse<Object>.Fail("Could not retrive email from Google."));
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-
             if (user == null)
             {
                 user = new User
@@ -140,11 +141,12 @@ public class AuthController : ControllerBase
 
             Response.Cookies.Append("auth", token, cookieOptions);
 
+            // return Redirect([])
             return Redirect("http://localhost:3000/dashboard");
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return StatusCode(500, ApiResponse<Object>.Fail(ex.Message));
         }
     }
 }

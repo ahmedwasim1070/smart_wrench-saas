@@ -1,9 +1,11 @@
 using Backend.Common;
+using Backend.Models.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+// Globals
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var config = builder.Configuration;
 
 // Builder 
 // API map generator 
@@ -13,10 +15,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 // For Databse - and also for passing the required configs like connection stirng
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString)
+    options.UseNpgsql(config.GetConnectionString("DefaultConnection"))
            .UseSnakeCaseNamingConvention());
-
-// Authentication Configuration
+// Authentication Configuration - for zero auth
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = "Cookies";
@@ -30,7 +31,11 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Custom Confgis
-// For fetching errors and parsing them in a custom structured response
+// Project Propertise - name,url and all
+builder.Services.Configure<ProjectSettings>(
+    config.GetSection("ProjectSettings")
+);
+// For fetching all kinds of  errors and parsing them in a custom structured response
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.InvalidModelStateResponseFactory = context =>

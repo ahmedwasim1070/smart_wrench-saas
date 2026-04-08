@@ -5,7 +5,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-db
     restart: always
     environment:
-      POSTGRES_DB:  ${COMPOSE_PROJECT_NAME}
+      POSTGRES_DB:  ${COMPOSE_PROJECT_NAME}-db
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
@@ -19,7 +19,19 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-api
     restart: always
     environment:
-      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=${COMPOSE_PROJECT_NAME};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      # Project Globals
+      ProjectPropertise__Name: ${PROJECT_NAME}
+      ProjectPropertise__ComposeName: ${COMPOSE_PROJECT_NAME}
+      ProjectPropertise__Url: ${PROJECT_URL}
+
+      # For DB
+      ConnectionStrings__DefaultConnection: ${DB_DEFAULT_CONNECTION}
+
+      # Google
+      Authentication__Google__ClientId: ${GOOGLE_CLIENT_ID}
+      Authentication__Google__ClientSecret: ${GOOGLE_CLIENT_SECRET}
+
+      # For Cookie Signing
       Jwt__Key: ${JWT_KEY}
       Jwt__Issuer: "${COMPOSE_PROJECT_NAME}-api"
       Jwt__Audience: "${COMPOSE_PROJECT_NAME}-frontend"
