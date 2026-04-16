@@ -1,5 +1,6 @@
 using Backend.Common;
 using Backend.Models.Settings;
+using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,12 +12,19 @@ var config = builder.Configuration;
 // API map generator 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Add the required things to understand controllers !
+
+// Register Controller
 builder.Services.AddControllers();
-// For Databse - and also for passing the required configs like connection stirng
+// Register Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(config.GetConnectionString("DefaultConnection"))
            .UseSnakeCaseNamingConvention());
+// Register services
+builder.Services.Configure<ProjectSettings>(
+    config.GetSection("ProjectSettings")
+);
+builder.Services.AddScoped<TokenServices>();
+
 // Authentication Configuration - for zero auth
 builder.Services.AddAuthentication(options =>
 {
@@ -31,10 +39,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Custom Confgis
-// Project Propertise - name,url and all
-builder.Services.Configure<ProjectSettings>(
-    config.GetSection("ProjectSettings")
-);
 // For fetching all kinds of  errors and parsing them in a custom structured response
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {

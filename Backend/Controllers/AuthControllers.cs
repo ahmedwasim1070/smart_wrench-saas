@@ -2,11 +2,13 @@ using Backend.Common;
 using Backend.DTOs.Auth;
 using Backend.Models;
 using Backend.Models.Enums;
+using Backend.Models.Settings;
 using Backend.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Security.Claims;
 
 namespace Backend.Controllers;
@@ -17,11 +19,13 @@ public class AuthController : ControllerBase
 {
     private readonly AppDbContext _context;
     private readonly TokenServices _tokenService;
+    private readonly ProjectSettings _projectSettings;
 
-    public AuthController(AppDbContext context, TokenServices tokenServices)
+    public AuthController(AppDbContext context, TokenServices tokenServices, IOptions<ProjectSettings> options)
     {
         _context = context;
         _tokenService = tokenServices;
+        _projectSettings = options.Value;
     }
 
     [HttpPost("signup")]
@@ -35,7 +39,6 @@ public class AuthController : ControllerBase
 
             if (request.Password != request.ConfirmPassword)
                 return BadRequest(ApiResponse<Object>.Fail("Password and Confirm Password does not match."));
-
 
             var newUser = new User
             {
@@ -111,7 +114,7 @@ public class AuthController : ControllerBase
             var name = result.Principal.FindFirst(ClaimTypes.Name)?.Value;
             var providerId = result.Principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(providerId))
                 return BadRequest(ApiResponse<Object>.Fail("Could not retrive email from Google."));
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
@@ -140,9 +143,7 @@ public class AuthController : ControllerBase
             };
 
             Response.Cookies.Append("auth", token, cookieOptions);
-
-            // return Redirect([])
-            return Redirect("http://localhost:3000/dashboard");
+            return Redirect($"{_projectSettings.Url}/dashboard");
         }
         catch (Exception ex)
         {
