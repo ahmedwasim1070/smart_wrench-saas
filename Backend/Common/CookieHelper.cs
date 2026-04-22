@@ -1,8 +1,9 @@
-namespace Backend.Services;
+namespace Backend.Common;
+using Microsoft.AspNetCore.Http;
 
-public class CookieService
+public static class CookieHelper
 {
-    public CookieOptions GetCookieOptions()
+    public static CookieOptions GetCookieOptions()
     {
         var cookieOptions = new CookieOptions
         {

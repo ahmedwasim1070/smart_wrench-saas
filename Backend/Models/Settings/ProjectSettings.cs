@@ -2,7 +2,7 @@ namespace Backend.Models.Settings;
 
 public class ProjectSettings
 {
-    public String Name { get; set; } = string.Empty;
-    public String ComposeName { get; set; } = string.Empty;
-    public String Url { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string ComposeName { get; set; } = string.Empty;
+    public string Url { get; set; } = string.Empty;
 }

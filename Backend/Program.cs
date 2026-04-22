@@ -3,6 +3,9 @@ using Backend.Models.Settings;
 using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 // Globals
 var builder = WebApplication.CreateBuilder(args);
@@ -23,23 +26,54 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.Configure<ProjectSettings>(
     config.GetSection("ProjectSettings")
 );
+builder.Services.Configure<JwtSettings>(
+    config.GetSection("Jwt")
+);
 builder.Services.AddScoped<TokenServices>();
 
-// Authentication Configuration - for zero auth
+// Authentication Configuration - for zero auth and jwt validation
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = "Cookies";
-    options.DefaultChallengeScheme = "Google";
+    // We want APIs to use JwtBearer by default for authentication
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddCookie("Cookies")
 .AddGoogle("Google", options =>
 {
     options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+    options.SignInScheme = "Cookies";
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = config["Jwt:Issuer"],
+        ValidateAudience = true,
+        ValidAudience = config["Jwt:Audience"],
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!)),
+        ValidateLifetime = true
+    };
+    
+    // Tell JwtBearer to read the token from our custom cookie named "auth"
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            if (context.Request.Cookies.ContainsKey("auth"))
+            {
+                context.Token = context.Request.Cookies["auth"];
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 
 // Custom Confgis
-// For fetching all kinds of  errors and parsing them in a custom structured response
+// PascalCase to snake_case - automate the process to follow the standard casing for db and the framework
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.InvalidModelStateResponseFactory = context =>

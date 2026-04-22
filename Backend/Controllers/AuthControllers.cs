@@ -5,6 +5,7 @@ using Backend.Models.Enums;
 using Backend.Models.Settings;
 using Backend.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ public class AuthController : ControllerBase
     private readonly TokenServices _tokenService;
     private readonly ProjectSettings _projectSettings;
 
-    public AuthController(AppDbContext context, TokenServices tokenServices, IOptions<ProjectSettings> options)
+    public AuthController(IOptions<ProjectSettings> options, AppDbContext context, TokenServices tokenServices)
     {
         _context = context;
         _tokenService = tokenServices;
@@ -77,13 +78,7 @@ public class AuthController : ControllerBase
                 return Unauthorized(ApiResponse<Object>.Fail("Check your email or password and try again."));
 
             var token = _tokenService.CreateToken(user);
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
+            var cookieOptions = CookieHelper.GetCookieOptions();
 
             Response.Cookies.Append("auth", token, cookieOptions);
             return Ok(ApiResponse<Object>.Ok(null, "Successfully Logged In."));
@@ -134,16 +129,48 @@ public class AuthController : ControllerBase
             }
 
             var token = _tokenService.CreateToken(user);
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
+            var cookieOptions = CookieHelper.GetCookieOptions();
 
             Response.Cookies.Append("auth", token, cookieOptions);
             return Redirect($"{_projectSettings.Url}/dashboard");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ApiResponse<Object>.Fail(ex.Message));
+        }
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public async Task<ActionResult<ApiResponse<Object>>> Me()
+    {
+        try
+        {
+            // Extract the user's PublicId (Subject) from the JWT token claims
+            var publicIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(publicIdString))
+                return Unauthorized(ApiResponse<Object>.Fail("Invalid Token."));
+
+            if (!Guid.TryParse(publicIdString, out Guid publicId))
+                return BadRequest(ApiResponse<Object>.Fail("Invalid User ID format."));
+
+            // Fetch the user from the database
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.PublicId == publicId);
+            
+            if (user == null)
+                return NotFound(ApiResponse<Object>.Fail("User not found."));
+
+            // Note: Never return the PasswordHash to the frontend!
+            var userDto = new
+            {
+                user.PublicId,
+                user.FullName,
+                user.Email,
+                user.Provider,
+                user.CreatedAt
+            };
+
+            return Ok(ApiResponse<Object>.Ok(userDto, "User data retrieved successfully."));
         }
         catch (Exception ex)
         {
