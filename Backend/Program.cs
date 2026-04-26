@@ -16,19 +16,21 @@ var config = builder.Configuration;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Register Controller
+// Registered Controller
 builder.Services.AddControllers();
-// Register Database
+// Registered Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(config.GetConnectionString("DefaultConnection"))
            .UseSnakeCaseNamingConvention());
-// Register services
+// Registered services
+// Singleton
 builder.Services.Configure<ProjectSettings>(
     config.GetSection("ProjectSettings")
 );
 builder.Services.Configure<JwtSettings>(
     config.GetSection("Jwt")
 );
+// Scoped
 builder.Services.AddScoped<TokenServices>();
 
 // Authentication Configuration - for zero auth and jwt validation
@@ -41,8 +43,8 @@ builder.Services.AddAuthentication(options =>
 .AddCookie("Cookies")
 .AddGoogle("Google", options =>
 {
-    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
-    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+    options.ClientId = config["Authentication:Google:ClientId"]!;
+    options.ClientSecret = config["Authentication:Google:ClientSecret"]!;
     options.SignInScheme = "Cookies";
 })
 .AddJwtBearer(options =>
@@ -57,8 +59,6 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!)),
         ValidateLifetime = true
     };
-    
-    // Tell JwtBearer to read the token from our custom cookie named "auth"
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
@@ -105,6 +105,7 @@ if (app.Environment.IsDevelopment())
 // request protocol upgrade if available
 app.UseHttpsRedirection();
 
+// Middlewares
 app.UseAuthentication();
 app.UseAuthorization();
 

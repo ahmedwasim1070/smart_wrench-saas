@@ -1,5 +1,6 @@
 using Backend.Common;
 using Backend.DTOs.Auth;
+using Backend.Mappings;
 using Backend.Models;
 using Backend.Models.Enums;
 using Backend.Models.Settings;
@@ -24,9 +25,9 @@ public class AuthController : ControllerBase
 
     public AuthController(IOptions<ProjectSettings> options, AppDbContext context, TokenServices tokenServices)
     {
+        _projectSettings = options.Value;
         _context = context;
         _tokenService = tokenServices;
-        _projectSettings = options.Value;
     }
 
     [HttpPost("signup")]
@@ -89,7 +90,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    [HttpGet("google")]
+    [HttpGet("/callback/google")]
     public IActionResult GoogleAuth()
     {
         var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
@@ -146,31 +147,20 @@ public class AuthController : ControllerBase
     {
         try
         {
-            // Extract the user's PublicId (Subject) from the JWT token claims
+            // Fetch Guid from the User object - created and decrypted by the authentication/authorization middleware 
             var publicIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(publicIdString))
                 return Unauthorized(ApiResponse<Object>.Fail("Invalid Token."));
 
+            // Parsed Guid was in string converted to Guid
             if (!Guid.TryParse(publicIdString, out Guid publicId))
                 return BadRequest(ApiResponse<Object>.Fail("Invalid User ID format."));
 
-            // Fetch the user from the database
             var user = await _context.Users.FirstOrDefaultAsync(u => u.PublicId == publicId);
-            
             if (user == null)
                 return NotFound(ApiResponse<Object>.Fail("User not found."));
 
-            // Note: Never return the PasswordHash to the frontend!
-            var userDto = new
-            {
-                user.PublicId,
-                user.FullName,
-                user.Email,
-                user.Provider,
-                user.CreatedAt
-            };
-
-            return Ok(ApiResponse<Object>.Ok(userDto, "User data retrieved successfully."));
+            return Ok(ApiResponse<UserResponseDto>.Ok(user.ToDto(), "User data retrieved successfully."));
         }
         catch (Exception ex)
         {

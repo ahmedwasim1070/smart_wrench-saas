@@ -18,7 +18,7 @@ FROM nginx:alpine
 # remove the default files in nginx
 RUN rm -rf /usr/share/nginx/html/*
 # copy our compiled frontned into the nginx instance
-COPY --from=builder /app/out /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 # also copy our nginx.conf to the project folder 
 COPY default.conf.template /etc/nginx/templates/default.conf.template
 # expose that port 80
