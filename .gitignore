@@ -50,7 +50,7 @@ artifacts/
 *.edmx
 
 # =========================
-# FRONTEND (Next.js / React)
+# FRONTEND (Vite / React)
 # =========================
 # Dependencies
 node_modules/
@@ -60,13 +60,9 @@ node_modules/
 # Testing
 coverage/
 
-# Next.js Build Output
-.next/
-out/
-
-# Production Build
-build/
+# Vite Build Output
 dist/
+dist-ssr/
 
 # Debug Logs
 npm-debug.log*
