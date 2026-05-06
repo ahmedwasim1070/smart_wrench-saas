@@ -89,7 +89,6 @@ public class AuthController : ControllerBase
             return StatusCode(500, ApiResponse<Object>.Fail(ex.Message));
         }
     }
-
     [HttpGet("/callback/google")]
     public IActionResult GoogleAuth()
     {

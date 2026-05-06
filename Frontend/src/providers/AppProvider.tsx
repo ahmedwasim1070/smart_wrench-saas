@@ -1,6 +1,7 @@
 // Imports
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
+import { GlobalLoader } from "../components/GlobalLoader";
 
 // Interfaces
 interface AppProvidedProps {
@@ -30,7 +31,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
   return (
     <GlobalContext.Provider value={values}>
-      <BrowserRouter>{children}</BrowserRouter>
+      <BrowserRouter>
+        {/*  */}
+        {isAppLoading && <GlobalLoader />}
+
+        {/*  */}
+        {children}
+      </BrowserRouter>
     </GlobalContext.Provider>
   );
 };
