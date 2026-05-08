@@ -1,8 +1,4 @@
 // Interfaces
-export interface NavigationLink {
-  label: string;
-  href: string;
-}
 export interface SiteContentSkeleton {
   brand: {
     name: string;
@@ -10,9 +6,17 @@ export interface SiteContentSkeleton {
   };
   navigation: {
     links: NavigationLink[];
-    loginText: string;
-    ctaText: string;
+    login: generalDictionary;
+    cta: generalDictionary;
   };
+}
+export interface NavigationLink {
+  label: string;
+  href: string;
+}
+export interface generalDictionary {
+  text: string;
+  link: string;
 }
 
 // 
@@ -24,13 +28,12 @@ export const SITE_CONTENT: SiteContentSkeleton = {
 
   navigation: {
     links: [
-      { label: "Features", href: "#features" },
-      { label: "Pricing", href: "#pricing" },
-      { label: "Solutions", href: "#solutions" },
-      { label: "Support", href: "#support" },
+      { label: "Features", href: "/features" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Solutions", href: "/solutions" },
+      { label: "Support", href: "/support" },
     ],
-    loginText: "Login",
-    ctaText: "Get Started",
+    login: { text: "Login", link: "/login" },
+    cta: { text: "Get Started", link: "/get-started" },
   },
-
 };
