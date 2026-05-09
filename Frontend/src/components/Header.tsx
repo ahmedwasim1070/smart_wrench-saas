@@ -7,16 +7,16 @@ export const Header = () => {
     <header
       id="header"
       role="banner"
-      className="min-w-full p-4 bg-primary border-b border-bright-p"
+      className="fixed top-0 w-full z-50 p-4 bg-primary/90 backdrop-blur-md border-b border-stroke-p"
     >
-      <nav className="flex flex-row justify-between">
+      <nav className="flex flex-row justify-between max-w-7xl mx-auto items-center">
         {/*  */}
         <a
           className="flex flex-row items-center gap-x-4 cursor-pointer group "
           href="/"
         >
-          <WrenchIcon className="w-8 h-8 fill-bright-p" />
-          <h1 className="main-heading  group-hover:text-bright-p transition-colors">
+          <WrenchIcon className="w-6 h-6 fill-bright-p" />
+          <h1 className="nav-label group-hover:text-bright-p transition-colors">
             {SITE_CONTENT.brand.name.toUpperCase()}
           </h1>
         </a>
@@ -32,15 +32,15 @@ export const Header = () => {
 
         {/*  */}
         <div className="flex flex-row items-center gap-x-6">
-          <a href={SITE_CONTENT.navigation.login.link} className="nav-items">
-            {SITE_CONTENT.navigation.login.text}
+          <a href={SITE_CONTENT.navigation.login.href} className="nav-items">
+            {SITE_CONTENT.navigation.login.label}
           </a>
           {/*  */}
           <a
-            href={SITE_CONTENT.navigation.cta.link}
-            className="primary-btn bg-secondary text-bright-p hover:text-mint-p"
+            href={SITE_CONTENT.navigation.cta.href}
+            className="nav-btn bg-bright-p/10 text-bright-p hover:bg-bright-p/20"
           >
-            {SITE_CONTENT.navigation.cta.text}
+            {SITE_CONTENT.navigation.cta.label}
           </a>
         </div>
       </nav>
