@@ -1,33 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  /* Colors */
-  --color-primary: #0F172A;
-  --color-secondary: #1E293B;
-  --color-tertiary: #231500;
-  --color-neutral: #787778;
-  --color-text: #ffffff;
-  --color-dark: #131315;
+  /* Backgrounds & Surfaces */
+  --color-bg-base: #131315;
+  --color-bg-surface: #0F172A;
+  --color-bg-elevated: #1E293B;
 
-  /* Other Colors */
-  /*  */
-  --color-stroke-p: #334155;
-  --color-bright-p: #3B82F6;
-  --color-grayed-p: #64748B;
-  --color-mint-p: #BEC6E0;
-  /*  */
-  --color-dark-t: #3E2D11;
-  --color-light-t: #DEC29A;
-  /*  */
-  --color-dark-n: #45464D;
-  --color-white-n: #E4E2E4;
-  --color-text-n: #C6C6CD;
+  /* Borders & Lines */
+  --color-border-subtle: #45464D;
+  --color-border-default: #334155;
+
+  /* Text Colors */
+  --color-text-white: #ffffff;
+  --color-text-primary: #E4E2E4;
+  --color-text-secondary: #C6C6CD;
+  --color-text-muted: #64748B;
+
+  /* Brand Accents - Blue */
+  --color-brand-blue: #3B82F6;
+  --color-brand-blue-light: #BEC6E0;
+
+  /* Brand Accents - Gold/Industrial */
+  --color-brand-gold: #DEC29A;
+  --color-brand-gold-muted: #3E2D11;
+  --color-brand-gold-deep: #231500;
+
+  /* Misc */
+  --color-gray-500: #787778;
 
   /* Typography */
   --font-sans: "Inter", sans-serif;
   --font-mono: "Space Grotesk", monospace;
 
-  /* Typography */
+  /* Typography Sizes */
   --text-headline-xl: 40px;
   --text-headline-lg: 32px;
   --text-headline-md: 24px;
@@ -55,29 +60,30 @@
 
 @layer base {
   body {
-    color: var(--color-text);
+    color: var(--color-text-primary);
     font-family: var(--font-sans);
     line-height: 1.5; 
   }
 }
 
 @layer components {
-  .nav-label{
+  /* Added by Agent - Refactored CSS variables to semantic names */
+  .nav-label {
     font-family: var(--font-sans);
     font-size: var(--text-headline-md);
     font-weight: 900;
-    color: var(--color-text);
+    color: var(--color-text-white);
   }
-  .nav-items{
+  .nav-items {
     font-size: var(--text-body-sm);
-    color: var(--color-grayed-p);
+    color: var(--color-text-muted);
     letter-spacing: 0.1rem;
     text-transform: uppercase;
     font-weight: 700;
     transition: color 0.2s ease;
   }
-  .nav-items:hover{
-    color: var(--color-bright-p);
+  .nav-items:hover {
+    color: var(--color-brand-blue);
   }
   .nav-btn {
     padding: 0.5rem 1.5rem;
@@ -85,12 +91,12 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
-    border: 1px solid var(--color-bright-p);
+    border: 1px solid var(--color-brand-blue);
     border-radius: var(--radius-DEFAULT);
     transition: color 0.2s ease;
   }
 
-  /*  */
+  /* Hero Section */
   .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -98,18 +104,18 @@
     padding: 0.25rem 0.75rem;
     margin-bottom: 1.5rem;
     border-radius: var(--radius-DEFAULT);
-    border: 1px solid var(--color-stroke-p);
-    background-color: var(--color-secondary); 
+    border: 1px solid var(--color-border-default);
+    background-color: var(--color-bg-elevated); 
     backdrop-filter: blur(12px);
     font-family: var(--font-mono);
     font-size: var(--text-body-md);
     font-weight: 700;
-    color: var(--color-mint-p);
+    color: var(--color-brand-blue-light);
   }
   .hero-title {
     font-family: var(--font-sans);
     font-size: var(--text-headline-xl);
-    color: var(--color-text);
+    color: var(--color-text-white);
     margin-bottom: 1.5rem;
     max-width: 56rem;
     margin-left: auto;
@@ -120,7 +126,7 @@
   .hero-subtitle {
     font-family: var(--font-sans);
     font-size: var(--text-body-lg);
-    color: var(--color-text-n);
+    color: var(--color-text-secondary);
     max-width: 42rem;
     margin-left: auto;
     margin-right: auto;

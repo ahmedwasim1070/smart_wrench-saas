@@ -7,7 +7,7 @@ export const Header = () => {
     <header
       id="header"
       role="banner"
-      className="fixed top-0 w-full z-50 p-4 bg-primary/90 backdrop-blur-md border-b border-stroke-p"
+      className="fixed top-0 w-full z-50 p-4 bg-bg-surface/90 backdrop-blur-md border-b border-border-default"
     >
       <nav className="flex flex-row justify-between max-w-7xl mx-auto items-center">
         {/*  */}
@@ -15,8 +15,8 @@ export const Header = () => {
           className="flex flex-row items-center gap-x-4 cursor-pointer group "
           href="/"
         >
-          <WrenchIcon className="w-6 h-6 fill-bright-p" />
-          <h1 className="nav-label group-hover:text-bright-p transition-colors">
+          <WrenchIcon className="w-6 h-6 fill-brand-blue" />
+          <h1 className="nav-label group-hover:text-brand-blue transition-colors">
             {SITE_CONTENT.brand.name.toUpperCase()}
           </h1>
         </a>
@@ -38,7 +38,7 @@ export const Header = () => {
           {/*  */}
           <a
             href={SITE_CONTENT.navigation.cta.href}
-            className="nav-btn bg-bright-p/10 text-bright-p hover:bg-bright-p/20"
+            className="nav-btn bg-brand-blue/10 text-brand-blue hover:bg-brand-blue/20"
           >
             {SITE_CONTENT.navigation.cta.label}
           </a>

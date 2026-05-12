@@ -1,6 +1,8 @@
 // Imports
 import { Routes, Route } from "react-router-dom";
+//
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 
 //
 function App() {
@@ -8,7 +10,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/dashboard" element={<div>Dashboard (Protected)</div>} />
-      <Route path="/login" element={<div>Login Page</div>} />
+      <Route path="/login" element={<Login />} />
       <Route path="*" element={<div>404 - Not Found</div>} />
     </Routes>
   );
