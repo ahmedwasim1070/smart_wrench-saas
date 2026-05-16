@@ -1,8 +1,12 @@
 // Imports
 import { SITE_CONTENT, WrenchIcon } from "../constants";
+import { useAppProvider } from "../providers/AppProvider";
 
 //
 export const Header = () => {
+  //
+  const { urlPath } = useAppProvider();
+
   return (
     <header
       id="header"
@@ -24,7 +28,10 @@ export const Header = () => {
         {/*  */}
         <ul className="flex flex-row items-center gap-x-12">
           {SITE_CONTENT.navigation.links.map((item) => (
-            <li key={item.href} className="nav-items">
+            <li
+              key={item.href}
+              className={`nav-items ${urlPath.pathname === item.href && "text-brand-blue"}`}
+            >
               <a href={item.href}>{item.label}</a>
             </li>
           ))}
@@ -32,7 +39,10 @@ export const Header = () => {
 
         {/*  */}
         <div className="flex flex-row items-center gap-x-6">
-          <a href={SITE_CONTENT.navigation.login.href} className="nav-items">
+          <a
+            href={SITE_CONTENT.navigation.login.href}
+            className={`nav-items ${urlPath.pathname === SITE_CONTENT.navigation.login.href && "text-brand-blue"}`}
+          >
             {SITE_CONTENT.navigation.login.label}
           </a>
           {/*  */}

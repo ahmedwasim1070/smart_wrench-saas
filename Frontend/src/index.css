@@ -67,7 +67,6 @@
 }
 
 @layer components {
-  /* Added by Agent - Refactored CSS variables to semantic names */
   .nav-label {
     font-family: var(--font-sans);
     font-size: var(--text-headline-md);

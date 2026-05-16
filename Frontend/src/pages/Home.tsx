@@ -5,7 +5,7 @@ import { Hero } from "../components/Hero";
 //
 const Home = () => {
   return (
-    <section id="home">
+    <section>
       <Header />
       <Hero />
     </section>

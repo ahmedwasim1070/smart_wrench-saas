@@ -1,12 +1,13 @@
 // Imports
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import { GlobalLoader } from "../components/GlobalLoader";
 
 // Interfaces
 interface AppProvidedProps {
   isAppLoading: boolean;
   setIsAppLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  urlPath: any;
 }
 interface AppProviderProps {
   children: ReactNode;
@@ -17,6 +18,8 @@ const GlobalContext = createContext<AppProvidedProps | undefined>(undefined);
 
 //
 export const AppProvider = ({ children }: AppProviderProps) => {
+  //
+  const urlPath = useLocation();
   // States
   const [isAppLoading, setIsAppLoading] = useState<boolean>(false);
 
@@ -25,8 +28,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     () => ({
       isAppLoading,
       setIsAppLoading,
+      urlPath,
     }),
-    [isAppLoading],
+    [isAppLoading, urlPath],
   );
 
   return (
