@@ -18,6 +18,7 @@ desktop.ini
 *.user
 *.userosscache
 *.sln.docstates
+*.csproj.lscache
 
 # =========================
 # BACKEND (.NET / C#)
