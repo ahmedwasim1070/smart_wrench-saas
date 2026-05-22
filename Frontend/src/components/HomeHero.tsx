@@ -3,21 +3,21 @@ import { ArrowRightIcon, PlayCircle } from "lucide-react";
 import { SITE_CONTENT } from "../constants";
 
 //
-export const Hero = () => {
+export const HomeHero = () => {
   return (
     <main id="hero">
       <div className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden flex items-center justify-center min-h-215">
         {/*  */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/hero.webp"
+            src="hero.webp"
             alt="SmartWrench - Hero Image"
             className="w-full h-full object-cover "
           />
         </div>
 
         {/*  */}
-        <div className="absolute inset-0 min-w-full min-h-full bg-bg-base/50 backdrop-blur-sm z-10"></div>
+        <div className="absolute inset-0 min-w-full min-h-full bg-bg-base/50 backdrop-blur-sm z-10" />
 
         {/*  */}
         <div className="relative z-20 max-w-7xl mx-auto px-6 text-center">

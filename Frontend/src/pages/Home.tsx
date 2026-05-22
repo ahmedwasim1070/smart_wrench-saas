@@ -1,13 +1,13 @@
 // Imports
 import { Header } from "../components/Header";
-import { Hero } from "../components/Hero";
+import { HomeHero } from "../components/HomeHero";
 
 //
 const Home = () => {
   return (
     <section>
       <Header />
-      <Hero />
+      <HomeHero />
     </section>
   );
 };

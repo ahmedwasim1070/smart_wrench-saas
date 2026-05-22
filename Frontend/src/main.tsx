@@ -5,12 +5,15 @@ import { createRoot } from "react-dom/client";
 import { AppProvider } from "./providers/AppProvider";
 import App from "./App";
 import "./index.css";
+import { BrowserRouter } from "react-router-dom";
 
 //
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AppProvider>
-      <App />
-    </AppProvider>
+    <BrowserRouter>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </BrowserRouter>
   </StrictMode>,
 );

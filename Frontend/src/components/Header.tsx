@@ -20,7 +20,7 @@ export const Header = () => {
           href="/"
         >
           <WrenchIcon className="w-6 h-6 fill-brand-blue" />
-          <h1 className="nav-label group-hover:text-brand-blue transition-colors">
+          <h1 className="main-heading group-hover:text-brand-blue transition-colors">
             {SITE_CONTENT.brand.name.toUpperCase()}
           </h1>
         </a>
