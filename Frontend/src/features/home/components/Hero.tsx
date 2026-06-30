@@ -1,9 +1,10 @@
 // Imports
 import { ArrowRightIcon, PlayCircle } from "lucide-react";
-import { SITE_CONTENT } from "../constants";
+import { SITE_CONTENT } from "../../../constants";
+import { PrimaryBadge } from "../../../components/ui/PrimaryBadge";
 
 //
-export const HomeHero = () => {
+export const Hero = () => {
   return (
     <main id="hero">
       <div className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden flex items-center justify-center min-h-215">
@@ -21,38 +22,35 @@ export const HomeHero = () => {
 
         {/*  */}
         <div className="relative z-20 max-w-7xl mx-auto px-6 text-center">
-          <div className="hero-badge">
-            <span className="w-2 h-2 rounded-full bg-brand-blue-light animate-pulse"></span>
-            {SITE_CONTENT.hero.badge}
-          </div>
+          <PrimaryBadge label={SITE_CONTENT.homeHero.badge} />
 
           <h1 className="hero-title">
-            {SITE_CONTENT.hero.title[0]}{" "}
+            {SITE_CONTENT.homeHero.title[0]}{" "}
             <span className="text-brand-blue-light">
-              {SITE_CONTENT.hero.title[1]}
+              {SITE_CONTENT.homeHero.title[1]}
             </span>
           </h1>
 
-          <p className="hero-subtitle">{SITE_CONTENT.hero.subtitle}</p>
+          <p className="hero-subtitle">{SITE_CONTENT.homeHero.subtitle}</p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               className="hero-btn border-2 border-brand-gold bg-brand-gold text-brand-gold-deep hover:bg-brand-gold/90"
-              href={SITE_CONTENT.hero.primaryBtn.href}
+              href={SITE_CONTENT.homeHero.primaryBtn.href}
             >
-              {SITE_CONTENT.hero.primaryBtn.label}
+              {SITE_CONTENT.homeHero.primaryBtn.label}
               <span className="material-symbols-outlined text-lg">
                 <ArrowRightIcon className="w-6 h-6 fill-brand-gold-deep" />
               </span>
             </a>
             <a
               className="hero-btn border border-border-subtle bg-transparent hover:border-brand-blue-light hover:bg-bg-base"
-              href={SITE_CONTENT.hero.secondaryBtn.href}
+              href={SITE_CONTENT.homeHero.secondaryBtn.href}
             >
               <span className="material-symbols-outlined text-lg">
                 <PlayCircle className="w-6 h-6" />
               </span>
-              {SITE_CONTENT.hero.secondaryBtn.label}
+              {SITE_CONTENT.homeHero.secondaryBtn.label}
             </a>
           </div>
         </div>

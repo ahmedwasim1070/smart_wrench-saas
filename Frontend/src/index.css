@@ -67,7 +67,7 @@
 }
 
 @layer components {
-  .main-heading {
+  .primary-heading {
     font-family: var(--font-sans);
     font-size: var(--text-headline-md);
     font-weight: 900;
@@ -98,7 +98,7 @@
   }
 
   /* Hero Section */
-  .hero-badge {
+  .primary-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;

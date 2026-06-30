@@ -1,8 +1,8 @@
 // Imports
 import { Routes, Route } from "react-router-dom";
 //
-import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Home from "./features/home/pages/Home";
+import Login from "./features/auth/pages/Login";
 
 //
 function App() {

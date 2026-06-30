@@ -1,5 +1,5 @@
 // Imports
-import { Header } from "../components/Header";
+import { Header } from "../../../components/Header";
 import { LoginForm } from "../components/LoginForm";
 import { LoginHero } from "../components/LoginHero";
 
@@ -14,9 +14,7 @@ const Login = () => {
         <LoginHero />
 
         {/*  */}
-        <div className="w-1/2 h-full bg-bg-base">
-          <LoginForm />
-        </div>
+        <LoginForm />
       </div>
     </section>
   );

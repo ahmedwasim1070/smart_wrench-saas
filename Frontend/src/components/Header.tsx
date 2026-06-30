@@ -1,6 +1,7 @@
 // Imports
-import { SITE_CONTENT, WrenchIcon } from "../constants";
+import { SITE_CONTENT } from "../constants";
 import { useAppProvider } from "../providers/AppProvider";
+import { PrimaryHeading } from "./ui/PrimaryHeading";
 
 //
 export const Header = () => {
@@ -16,13 +17,15 @@ export const Header = () => {
       <nav className="flex flex-row justify-between max-w-7xl mx-auto items-center">
         {/*  */}
         <a
-          className="flex flex-row items-center gap-x-4 cursor-pointer group "
+          className="flex flex-row items-center gap-x-4 cursor-pointer group"
           href="/"
         >
-          <WrenchIcon className="w-6 h-6 fill-brand-blue" />
-          <h1 className="main-heading group-hover:text-brand-blue transition-colors">
-            {SITE_CONTENT.brand.name.toUpperCase()}
-          </h1>
+          <PrimaryHeading
+            icon="primaryIcon"
+            iconStyle="w-6 h-6 fill-brand-blue"
+            label={SITE_CONTENT.brand.name}
+            labelStyle="primary-heading group-hover:text-brand-blue transition-colors"
+          />
         </a>
 
         {/*  */}
