@@ -1,6 +1,6 @@
 // Imports
 import { PrimaryBadge } from "../../../components/ui/PrimaryBadge";
-import { PrimaryHeading } from "../../../components/ui/PrimaryHeading";
+import { PrimaryLogo } from "../../../components/ui/PrimaryLogo";
 import { SITE_CONTENT } from "../../../constants";
 
 //
@@ -18,40 +18,42 @@ export const LoginHero = () => {
       <div className="absolute inset-0 bg-black/80 z-10" />
 
       {/*  */}
-      <div className="relative w-full h-full pt-24 p-12 z-20">
+      <div className="relative w-full h-full p-12 z-20">
         {/*  */}
-        <div className="absolute">
-          <PrimaryHeading
+        <div className="absolute top-24">
+          <PrimaryLogo
             icon="secondaryIcon"
             iconStyle="w-7 h-7 fill-brand-blue-light"
             label={SITE_CONTENT.brand.name}
-            labelStyle="primary-heading"
+            labelStyle="primary-logo"
           />
         </div>
 
         {/*  */}
-        <div className="w-auto absolute bottom-10 flex flex-col">
+        <div className="w-auto absolute bottom-10 space-y-4">
           {/*  */}
           <div>
             <PrimaryBadge
-              label={SITE_CONTENT.loginHero.badge}
+              label={SITE_CONTENT.login.hero.badge}
               badgeStyle="bg-bg-base"
             />
           </div>
 
           {/*  */}
-          <div className="gap-y-0">
+          <div className="space-y-2">
             {/*  */}
-            <h1 className="hero-title">{SITE_CONTENT.loginHero.title[0]} </h1>
+            <h1 className="primary-title">
+              {SITE_CONTENT.login.hero.title[0]}{" "}
+            </h1>
 
             {/*  */}
-            <h2 className="hero-title text-brand-blue-light">
-              {SITE_CONTENT.loginHero.title[1]}{" "}
+            <h2 className="primary-title text-brand-blue-light">
+              {SITE_CONTENT.login.hero.title[1]}
             </h2>
           </div>
 
           {/*  */}
-          <p className="hero-subtitle">{SITE_CONTENT.loginHero.subtitle}</p>
+          <p className="primary-subtitle">{SITE_CONTENT.login.hero.subtitle}</p>
 
           {/*  */}
           <hr className="text-border-subtle border-2" />

@@ -67,7 +67,7 @@
 }
 
 @layer components {
-  .primary-heading {
+  .primary-logo {
     font-family: var(--font-sans);
     font-size: var(--text-headline-md);
     font-weight: 900;
@@ -103,7 +103,6 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.25rem 0.75rem;
-    margin-bottom: 1.5rem;
     border-radius: var(--radius-DEFAULT);
     border: 1px solid var(--color-border-default);
     background-color: var(--color-bg-elevated); 
@@ -113,27 +112,20 @@
     font-weight: 700;
     color: var(--color-brand-blue-light);
   }
-  .hero-title {
+  .primary-title {
     font-family: var(--font-sans);
     font-size: var(--text-headline-xl);
     color: var(--color-text-white);
-    margin-bottom: 1.5rem;
-    max-width: 56rem;
-    margin-left: auto;
-    margin-right: auto;
     line-height: 1.2;
     font-weight: 700;
   }
-  .hero-subtitle {
+  .primary-subtitle {
     font-family: var(--font-sans);
     font-size: var(--text-body-lg);
     color: var(--color-text-secondary);
     max-width: 42rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2.5rem;
   }
-  .hero-btn {
+  .primary-btn {
     font-family: var(--font-mono);
     font-size: var(--text-body-sm);
     font-weight: 600;

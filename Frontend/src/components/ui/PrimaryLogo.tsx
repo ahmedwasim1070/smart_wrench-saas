@@ -8,7 +8,7 @@ const icons = {
 };
 
 //
-interface PrimaryHeadingProps {
+interface PrimaryLogoProps {
   icon: keyof typeof icons;
   iconStyle: string;
   label: string;
@@ -16,12 +16,12 @@ interface PrimaryHeadingProps {
 }
 
 //
-export const PrimaryHeading = ({
+export const PrimaryLogo = ({
   icon,
   iconStyle,
   label,
   labelStyle,
-}: PrimaryHeadingProps) => {
+}: PrimaryLogoProps) => {
   const Icon = icons[icon];
 
   return (

@@ -6,10 +6,10 @@ import { LoginHero } from "../components/LoginHero";
 //
 const Login = () => {
   return (
-    <section>
+    <section id="login" className="flex min-h-screen">
       <Header />
 
-      <div className="flex flex-row items-center w-full h-180">
+      <div className="flex flex-1">
         {/*  */}
         <LoginHero />
 

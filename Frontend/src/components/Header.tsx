@@ -1,7 +1,7 @@
 // Imports
 import { SITE_CONTENT } from "../constants";
 import { useAppProvider } from "../providers/AppProvider";
-import { PrimaryHeading } from "./ui/PrimaryHeading";
+import { PrimaryLogo } from "./ui/PrimaryLogo";
 
 //
 export const Header = () => {
@@ -20,11 +20,11 @@ export const Header = () => {
           className="flex flex-row items-center gap-x-4 cursor-pointer group"
           href="/"
         >
-          <PrimaryHeading
+          <PrimaryLogo
             icon="primaryIcon"
             iconStyle="w-6 h-6 fill-brand-blue"
             label={SITE_CONTENT.brand.name}
-            labelStyle="primary-heading group-hover:text-brand-blue transition-colors"
+            labelStyle="primary-logo group-hover:text-brand-blue transition-colors"
           />
         </a>
 

@@ -16,7 +16,7 @@ export const SITE_CONTENT = {
   },
 
   // Home Hero
-  homeHero: {
+  home: {
     badge: "SYSTEM ONLINE v1.0.0",
     title: ["Run your workshop on", "autopilot"],
     subtitle: "The heavy-duty mechanical reliability of a 10mm socket meets the high-velocity digital intelligence of modern SaaS. Diagnose,invoice, and track in real-time.",
@@ -25,9 +25,15 @@ export const SITE_CONTENT = {
   },
 
   // Login Hero
-  loginHero: {
-    badge: "MAINFRAME SECURE",
-    title: ["Industrial Grade", " Digital Precision"],
-    subtitle: "Access the central diagnostic terminal to manage repair orders, inventory protocols, and bay schedules with uncompromising efficiency.",
+  login: {
+    hero: {
+      badge: "MAINFRAME SECURE",
+      title: ["Industrial Grade", " Digital Precision"],
+      subtitle: "Access the central diagnostic terminal to manage repair orders, inventory protocols, and bay schedules with uncompromising efficiency.",
+    },
+    form: {
+      title: "Terminal Access",
+      subtitle: "Authenticate to initialize service bay protocols.",
+    }
   }
 } as const;
